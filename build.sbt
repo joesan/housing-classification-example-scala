@@ -56,6 +56,7 @@ resolvers += "sonatype-releases" at "https://oss.sonatype.org/content/repositori
 
 libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.3.1",
+  "com.github.pathikrit" %% "better-files" % "3.6.0",
   // Test dependencies
   "org.scalatest" %% "scalatest" % "3.0.1" % Test,
   "org.awaitility" % "awaitility" % "3.0.0" % Test
