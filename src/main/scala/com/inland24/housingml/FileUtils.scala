@@ -29,7 +29,7 @@ object FileUtils {
           dirCount += 1
         } else {
           val data = new Array[Byte](BUFFER_SIZE)
-          val fos = new FileOutputStream(outputPath + entry.getName)
+          val fos = new FileOutputStream(s"$outputPath/${entry.getName}")
           val dest = new BufferedOutputStream(fos, BUFFER_SIZE)
 
           var count = tais.read(data, 0, BUFFER_SIZE)

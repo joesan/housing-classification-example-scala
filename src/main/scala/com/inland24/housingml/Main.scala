@@ -21,8 +21,8 @@ object Main {
         val fileDir = new JFile(config.getString("file.to.path"))
         if (!fileDir.exists()) fileDir.mkdirs()
         val fileTargetPath = new JFile(fileDir, config.getString("file.name"))
-        val csvFile = download(new URL(config.getString("file.from.url")), fileTargetPath)
-        println(s"CSV file downloaded is ${csvFile.!!}")
+        //val csvFile = download(new URL(config.getString("file.from.url")), fileTargetPath)
+        //println(s"CSV file downloaded is ${csvFile.!!}")
 
         // 2. Unzip the contents
         unzip(fileTargetPath, fileDir)
