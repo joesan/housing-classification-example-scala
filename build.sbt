@@ -60,6 +60,7 @@ mainClass in (Compile, run) := Some("com.inland24.housingml.Main")
 libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.3.1",
   "org.apache.commons" % "commons-compress" % "1.14",
+  "commons-io" % "commons-io" % "2.6",
   // Test dependencies
   "org.scalatest" %% "scalatest" % "3.0.1" % Test,
   "org.awaitility" % "awaitility" % "3.0.0" % Test

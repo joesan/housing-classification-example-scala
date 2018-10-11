@@ -9,7 +9,7 @@ import scala.annotation.tailrec
 import scala.util.Try
 
 
-object FileUtils {
+object FileUtility {
 
   private val BUFFER_SIZE: Int = 4096
 

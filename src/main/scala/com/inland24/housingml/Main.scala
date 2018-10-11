@@ -3,7 +3,9 @@ package com.inland24.housingml
 import java.io.{File => JFile}
 import java.net.URL
 
+import scala.language.postfixOps
 import com.typesafe.config.{ConfigFactory, ConfigParseOptions, ConfigResolveOptions}
+import org.apache.commons.io.FileUtils
 
 object Main {
 
@@ -21,8 +23,11 @@ object Main {
         val fileDir = new JFile(config.getString("file.to.path"))
         if (!fileDir.exists()) fileDir.mkdirs()
         val fileTargetPath = new JFile(fileDir, config.getString("file.name"))
-        //val csvFile = download(new URL(config.getString("file.from.url")), fileTargetPath)
-        //println(s"CSV file downloaded is ${csvFile.!!}")
+        println("from Path is -----")
+        println(config.getString("file.from.url"))
+        println("to Path is -----")
+        println(fileTargetPath)
+        val csvFile = download(new URL(config.getString("file.from.url")), fileTargetPath)
 
         // 2. Unzip the contents
         unzip(fileTargetPath, fileDir)
@@ -34,12 +39,11 @@ object Main {
   }
 
   def download(from: URL, to: JFile) = {
-    import sys.process._
-    from #> to
+    FileUtils.copyURLToFile(from, to, 20000, 20000)
   }
 
   def unzip(from: JFile, to: JFile) = {
-    FileUtils.extractTGZ(from.getAbsolutePath, to.getPath)
+    FileUtility.extractTGZ(from.getAbsolutePath, to.getPath)
   }
 
   //def downloadAndUnzip(from: File, targetFileName: String) =
