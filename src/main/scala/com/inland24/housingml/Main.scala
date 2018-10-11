@@ -9,6 +9,9 @@ import scala.language.postfixOps
 import com.typesafe.config.{ConfigFactory, ConfigParseOptions, ConfigResolveOptions}
 import org.apache.commons.io.FileUtils
 
+import scala.util.Try
+import scala.util.control.NonFatal
+
 
 object Main {
 
@@ -21,17 +24,26 @@ object Main {
           ConfigResolveOptions.defaults()
         ).resolve()
         val fileName = config.getString("file.name")
+        val downloadURL = config.getString("file.from.url")
+        val localDirPath = config.getString("file.to.path")
 
-        // Check if we have the target dir's created, if not create them
-        val localDir = File(config.getString("file.to.path")).createDirectories()
+        // 0. Check if we have the target dir's created, if not create them
+        val localDir = File(localDirPath).createDirectories()
 
-        // 1. Download the file and store it locally
-        download(new URL(config.getString("file.from.url")), new JFile(localDir.toJava, fileName))
+        val result = for {
+          // 1. Download the file and store it locally
+          _ <- download(new URL(downloadURL), new JFile(localDir.toJava, fileName))
+          // 2. Unzip the contents
+          _ <- unzip(File(s"${localDir.path}/$fileName"), File(s"${localDir.path}/housing.csv"))
+        } yield {
+          println("Successfully ran the file pre-processing")
+        }
 
-        // 2. Unzip the contents
-        unzip(File(s"${localDir.path}/$fileName"), File(s"${localDir.path}/housing.csv"))
-
-        println()
+        result.recover {
+          case NonFatal(ex) =>
+            println(s"Some stupidity happened ${ex.getMessage}")
+            System.exit(-1)
+        }
       case None =>
         println("No environment variable setting found! So exiting run...")
         println("Usage: sbt -Denv=test run")
@@ -39,12 +51,16 @@ object Main {
     }
   }
 
-  def download(from: URL, to: JFile) = {
-    FileUtils.copyURLToFile(from, to, 20000, 20000)
+  def download(from: URL, to: JFile): Try[Unit] = {
+    Try {
+      if (!to.exists())
+        FileUtils.copyURLToFile(from, to, 20000, 20000)
+    }
   }
 
-  def unzip(from: File, to: File) =
-    from.unGzipTo(to)
+  def unzip(from: File, to: File): Try[Unit] = {
+    Try { from.unGzipTo(to) }
+  }
 
   def splitTestSet(csvFile: JFile) = ???
 }
