@@ -59,6 +59,7 @@ mainClass in (Compile, run) := Some("com.inland24.housingml.Main")
 
 libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.3.1",
+  "com.github.pathikrit" %% "better-files" % "3.6.0",
   "org.apache.commons" % "commons-compress" % "1.14",
   "commons-io" % "commons-io" % "2.6",
   // Test dependencies
