@@ -40,7 +40,7 @@
   
   <meta name="pjax-timeout" content="1000">
   
-  <meta name="request-id" content="0D30:1320:DE865B:183F328:5BBEF5E9" data-pjax-transient>
+  <meta name="request-id" content="0D5E:131F:C4E595:15A0135:5BBF0132" data-pjax-transient>
 
 
   
@@ -51,7 +51,7 @@
     <meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
     <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
 
-  <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="0D30:1320:DE865B:183F328:5BBEF5E9" /><meta name="octolytics-dimension-region_edge" content="iad" /><meta name="octolytics-dimension-region_render" content="iad" />
+  <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="0D5E:131F:C4E595:15A0135:5BBF0132" /><meta name="octolytics-dimension-region_edge" content="iad" /><meta name="octolytics-dimension-region_render" content="iad" />
 <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" />
 
 
@@ -69,11 +69,11 @@
     <meta name="user-login" content="">
 
       <meta name="expected-hostname" content="github.com">
-    <meta name="js-proxy-site-detection-payload" content="YjEzYjVkMTdkYmJhN2EwZmMzYWY4NTI3MzRlYTQzOTVjZDc0ZjRmOWU3MWU3YmNjM2M2OTk3ZGE5ZmQ4OWM2MXx7InJlbW90ZV9hZGRyZXNzIjoiOTUuMjIzLjEwNi4xOSIsInJlcXVlc3RfaWQiOiIwRDMwOjEzMjA6REU4NjVCOjE4M0YzMjg6NUJCRUY1RTkiLCJ0aW1lc3RhbXAiOjE1MzkyNDE0NTAsImhvc3QiOiJnaXRodWIuY29tIn0=">
+    <meta name="js-proxy-site-detection-payload" content="ZWY4ODY5NjE4OTIxYTBlMzlkYTliNWJhYjQ3MDE3MzIxYzE5ZDZhYmIyNzEyZDgwOWFiYTU0OTFkMjRmNzMyM3x7InJlbW90ZV9hZGRyZXNzIjoiOTUuMjIzLjEwNi4xOSIsInJlcXVlc3RfaWQiOiIwRDVFOjEzMUY6QzRFNTk1OjE1QTAxMzU6NUJCRjAxMzIiLCJ0aW1lc3RhbXAiOjE1MzkyNDQzMzksImhvc3QiOiJnaXRodWIuY29tIn0=">
 
     <meta name="enabled-features" content="DASHBOARD_V2_LAYOUT_OPT_IN,EXPLORE_DISCOVER_REPOSITORIES,UNIVERSE_BANNER,MARKETPLACE_PLAN_RESTRICTION_EDITOR,ISSUE_AND_PR_HOVERCARDS">
 
-  <meta name="html-safe-nonce" content="e64ba79f80f209af9aea74ab9d331beb7062c952">
+  <meta name="html-safe-nonce" content="5de32dbd2a5a8222fcc821141ca6df6ba264fd0f">
 
   <meta http-equiv="x-pjax-version" content="fcba0ecc9d1918cad0c890ad4ec5a675">
   
@@ -177,7 +177,7 @@
           autocapitalize="off"
           aria-autocomplete="list"
           aria-controls="jump-to-results"
-          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=AjQjyWYbaXahqH00HpfqICGpp43d6Psxw4f+gWrsDV1ycJ00uoUjOJdPUebuV+rV/g0VS9W0u6PYdSXQHiLP8w=="
+          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=dSVqv42XV8YX9j8cwh0MhsM9XHnLGehYttrVJX9PhV71u0ly/DMObaqGQ48aLjvJS07XjXCEvy1KiIy6EQ/Y0A=="
           spellcheck="false"
           autocomplete="off"
           >
@@ -295,8 +295,8 @@
   </a>
 
     <a class="social-count js-social-count" href="/ageron/handson-ml/stargazers"
-      aria-label="9788 users starred this repository">
-      9,788
+      aria-label="9789 users starred this repository">
+      9,789
     </a>
 
   </li>
@@ -386,7 +386,7 @@
         <div class="signup-prompt-bg rounded-1">
       <div class="signup-prompt p-4 text-center mb-4 rounded-1">
         <div class="position-relative">
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/site/dismiss_signup_prompt" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="2dOmZct8A/ZfWYfy9norGjsA1FcrCb5jjnT4fZj5AUyTNzU7F80p0rhQcBp4kiWR1I9WUP5JLu5mHTACfV3UUA==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/site/dismiss_signup_prompt" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="tmkBxjR5fkmFrK4/MemZ91GxDGWcOBZ0B1dz07fJuUGCyM5ead13bNI8OVfHYUU8c5YBUvcqHb3zAtG580B0Uw==" />
             <button type="submit" class="position-absolute top-0 right-0 btn-link link-gray" data-ga-click="(Logged out) Sign up prompt, clicked Dismiss, text:dismiss">
               Dismiss
             </button>
@@ -537,7 +537,7 @@
     </div>
 
 
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/ageron/handson-ml/delete/master/datasets/housing/housing.tgz" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="aeTbb6S3OGP6SFtvhfUNnY2rXut+hfNGtWJSQaTxYZyZc+XpY87NTnOMINHm3pf9fjhVlMOQ+YylEyVcQtlFHQ==" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/ageron/handson-ml/delete/master/datasets/housing/housing.tgz" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="LSL2TORQps8OOBa6zh5zbM73E3qBhKWz5KeLX0CQ4b3UdNJ6cef2pPzfvKkxQjl44GLmresvpZPjHfL+QV1EAA==" />
           <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
             aria-label="You must be signed in to make or propose changes" data-disable-with>
             <svg class="octicon octicon-trashcan" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z"/></svg>
@@ -584,7 +584,7 @@
 <div class="footer container-lg px-3" role="contentinfo">
   <div class="position-relative d-flex flex-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
     <ul class="list-style-none d-flex flex-wrap ">
-      <li class="mr-3">&copy; 2018 <span title="0.15852s from unicorn-5d7cc9946f-nfp66">GitHub</span>, Inc.</li>
+      <li class="mr-3">&copy; 2018 <span title="0.13548s from unicorn-2316937727-88vpv">GitHub</span>, Inc.</li>
         <li class="mr-3"><a data-ga-click="Footer, go to terms, text:terms" href="https://github.com/site/terms">Terms</a></li>
         <li class="mr-3"><a data-ga-click="Footer, go to privacy, text:privacy" href="https://github.com/site/privacy">Privacy</a></li>
         <li class="mr-3"><a href="https://help.github.com/articles/github-security/" data-ga-click="Footer, go to security, text:security">Security</a></li>

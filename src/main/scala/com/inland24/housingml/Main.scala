@@ -25,7 +25,8 @@ object Main {
         println(s"CSV file downloaded is ${csvFile.!!}")
 
         // 2. Unzip the contents
-        unzip(fileTargetPath, fileTargetPath)
+        unzip(fileTargetPath, fileDir)
+        System.exit(0)
       case None =>
         // TODO: log to the console and exit with a failure code
         System.exit(-1)
@@ -38,7 +39,7 @@ object Main {
   }
 
   def unzip(from: JFile, to: JFile) = {
-    FileUtils.extractTGZ(from, to.getPath)
+    FileUtils.extractTGZ(from.getAbsolutePath, to.getPath)
   }
 
   //def downloadAndUnzip(from: File, targetFileName: String) =

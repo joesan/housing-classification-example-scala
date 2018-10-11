@@ -5,6 +5,7 @@ import java.io._
 import org.apache.commons.compress.archivers.tar.{TarArchiveEntry, TarArchiveInputStream}
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
 
+import scala.annotation.tailrec
 import scala.util.Try
 
 
@@ -15,40 +16,44 @@ object FileUtils {
   def extractTGZ(from: File, outputPath: String): Unit = {
     var fileCount: Int = 0
     var dirCount: Int = 0
-    print("Extracting files")
+    print(s"Extracting files from ${from.getAbsolutePath}")
+    val tais = new TarArchiveInputStream(new GzipCompressorInputStream(new BufferedInputStream(new FileInputStream(from))))
     Try {
-      val tais = new TarArchiveInputStream(new GzipCompressorInputStream(new BufferedInputStream(new FileInputStream(from))))
-      try {
-        var entry: TarArchiveEntry = tais.getNextEntry.asInstanceOf[TarArchiveEntry]
+      @tailrec
+      def readTarArchiveEntry(entry: TarArchiveEntry): Unit = {
+        println("Extracting file: " + entry.getName)
 
-        /** Read the tar entries using the getNextEntry method **/
-        while (entry != null) {
-          //println("Extracting file: " + entry.getName());
+        // Create directories as required
+        if (entry.isDirectory) {
+          new File(outputPath + entry.getName).mkdirs
+          dirCount += 1
+        } else {
+          val data = new Array[Byte](BUFFER_SIZE)
+          val fos = new FileOutputStream(outputPath + entry.getName)
+          val dest = new BufferedOutputStream(fos, BUFFER_SIZE)
 
-          //Create directories as required
-          if (entry.isDirectory) {
-            new File(outputPath + entry.getName).mkdirs
-            dirCount += 1
-          } else {
-            val data = new Array[Byte](BUFFER_SIZE)
-            val fos = new FileOutputStream(outputPath + entry.getName)
-            val dest = new BufferedOutputStream(fos, BUFFER_SIZE)
+          var count = tais.read(data, 0, BUFFER_SIZE)
 
-            var count = tais.read(data, 0, BUFFER_SIZE)
-
-            while (count != -1) {
-              dest.write(data, 0, count)
-              count = tais.read(data, 0, BUFFER_SIZE)
-            }
-            dest.close()
-            fileCount += 1
+          while (count != -1) {
+            dest.write(data, 0, count)
+            count = tais.read(data, 0, BUFFER_SIZE)
           }
-          if (fileCount % 1000 == 0) print(".")
-          entry = tais.getNextEntry.asInstanceOf[TarArchiveEntry]
+          dest.close()
+          fileCount += 1
         }
-      } finally {
-        if (tais != null) tais.close()
+        if (fileCount % 1000 == 0) print(".")
+
+        // Check if we have some more files in the compressed archive
+        val nextEntry = tais.getNextEntry.asInstanceOf[TarArchiveEntry]
+        if (nextEntry != null) readTarArchiveEntry(nextEntry) else ()
       }
+
+      readTarArchiveEntry(tais.getNextEntry.asInstanceOf[TarArchiveEntry])
+
+    } recover {
+      case t: Throwable =>
+        println(s"Unexpected exception occurred when de-compressing files ${t.getMessage}")
+        if (tais != null) tais.close()
     }
     println("\n" + fileCount + " files and " + dirCount + " directories extracted to: " + outputPath)
   }
