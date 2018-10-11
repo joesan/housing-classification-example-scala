@@ -54,6 +54,9 @@ javaOptions in Test += "-Dlogger.file=conf/logback-test.xml"
 
 resolvers += "sonatype-releases" at "https://oss.sonatype.org/content/repositories/public/"
 
+// set the main class for 'sbt run'
+mainClass in (Compile, run) := Some("com.inland24.housingml.Main")
+
 libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.3.1",
   "com.github.pathikrit" %% "better-files" % "3.6.0",
