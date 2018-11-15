@@ -19,6 +19,8 @@ before_script:
   - sbt sbt-version
 
 test:
+  tags:
+    - master
   script:
     # Execute your project's tests
     - sbt clean test
