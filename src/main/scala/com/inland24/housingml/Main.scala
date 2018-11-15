@@ -62,5 +62,7 @@ object Main {
     Try { from.unGzipTo(to) }
   }
 
-  def splitTestSet(csvFile: JFile) = ???
+  def splitTestSet(csvFile: File) = {
+    val lines = csvFile.lines
+  }
 }
