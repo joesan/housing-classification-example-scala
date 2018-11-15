@@ -20,4 +20,4 @@ test:
     - master
   script:
     # Execute your project's tests
-    - sbt run -Denv=default
+    - sbt -Denv=default run

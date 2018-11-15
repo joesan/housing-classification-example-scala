@@ -5,4 +5,5 @@ datasets/*
 project/project/*
 project/target/*
 target/*
+$HOME
 .idea/*
