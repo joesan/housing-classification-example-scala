@@ -1,7 +1,7 @@
 # This file is a template, and might need editing before it works on your project.
 # Official Java image. Look for the different tagged releases at
 # https://hub.docker.com/r/library/java/tags/ . A Java image is not required
-# but an image with a JVM speeds up the build a bit. Test again to see if GitLab CI / CD works!
+# but an image with a JVM speeds up the build a bit. Once more testing again to see if GitLab CI / CD works!
 image: java:8
 
 before_script:
