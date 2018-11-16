@@ -22,6 +22,8 @@ object Main {
         // 0. Check if we have the target dir's created, if not create them
         val localDir = File(appCfg.targetFilePath).createDirectories()
 
+        println(s"Created the directories under ${localDir.path.toString}")
+
         val result = for {
           // 1. Download the file and store it locally
           _ <- download(new URL(appCfg.sourceFileUrl), new JFile(localDir.toJava, appCfg.sourceFileName))
