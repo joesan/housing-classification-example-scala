@@ -16,8 +16,8 @@ object AppConfig {
     AppConfig(
       environment = cfg.getString("environment"),
       sourceFileName = cfg.getString("file.name"),
-      sourceFileUrl = cfg.getString("file.from.url"),
-      targetFilePath = cfg.getString("file.to.path")
+      sourceFileUrl = cfg.getString("file.source.url"),
+      targetFilePath = cfg.getString("file.target.path")
     )
   }
 }
