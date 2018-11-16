@@ -5,5 +5,5 @@ datasets/*
 project/project/*
 project/target/*
 target/*
-$HOME
+src/main/resources/application.conf
 .idea/*

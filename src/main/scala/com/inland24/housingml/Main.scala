@@ -33,7 +33,7 @@ object Main {
           println("Successfully ran the file pre-processing")
         }
 
-        println(s"Files available are ${localDir.list.foreach(println(_))}")
+        localDir.list.foreach(println)
 
         result.recover {
           case NonFatal(ex) =>

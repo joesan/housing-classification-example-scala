@@ -4,6 +4,9 @@
 # but an image with a JVM speeds up the build a bit.
 image: java:8
 
+variables:
+  FILE_TARGET_PATH: $FILE_TARGET_PATH
+
 before_script:
   # Enable the usage of sources over https
   - apt-get update -yqq
@@ -20,4 +23,4 @@ test:
     - master
   script:
     # Execute your project's tests
-    - sbt run
+    - sbt -Denv=test run
