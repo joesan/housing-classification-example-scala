@@ -33,6 +33,8 @@ object Main {
           println("Successfully ran the file pre-processing")
         }
 
+        println(s"Files available are ${localDir.list}")
+
         result.recover {
           case NonFatal(ex) =>
             println(s"Some stupidity happened ${ex.getMessage}")
