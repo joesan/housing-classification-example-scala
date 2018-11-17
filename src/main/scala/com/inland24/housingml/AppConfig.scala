@@ -4,6 +4,7 @@ import com.typesafe.config.Config
 
 import scala.util.Try
 
+
 final case class AppConfig(
   environment: String,
   sourceFileName: String,
