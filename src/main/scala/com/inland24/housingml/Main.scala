@@ -16,13 +16,11 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-    // 1. Load the configuration
+    // Load the configuration & process
     AppConfig.load(ConfigUtil.loadFromEnv()) match {
       case Success(appCfg) =>
         // 0. Check if we have the target dir's created, if not create them
         val localDir = File(appCfg.targetFilePath).createDirectories()
-
-        println(s"Created the directories under ${localDir.path.toString}")
 
         val result = for {
           // 1. Download the file and store it locally
