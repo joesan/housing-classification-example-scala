@@ -57,7 +57,8 @@ object Main {
     Try { from.unGzipTo(to) }
   }
 
-  def splitTestSet(csvFile: File) = {
+  // TODO: Split the test set and put that in a folder of choice!
+  def splitTestSet(csvFile: File): Unit = {
     val lines = csvFile.lines
   }
 }
