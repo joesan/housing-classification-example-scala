@@ -87,6 +87,7 @@ object Main {
     val trainingSetSize = (tail.length * testDataCfg.trainingSetRatio).toInt
 
     val (trainingData, testData) = tail.splitAt(trainingSetSize)
+    println(s">> Training Dataset Size is ${trainingData.length} >> Test Dataset size is ${testData.length}")
     (Seq(data.head) ++ trainingData, Seq(data.head) ++ testData)
   }
 
