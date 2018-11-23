@@ -19,8 +19,7 @@ object Main {
     // Load the configuration & process
     AppConfig.load(ConfigUtil.loadFromEnv()) match {
       case Success(appCfg) =>
-        // 0. We first delete old data and create the directories fresh
-        File(appCfg.targetFilePath).deleteOnExit()
+        // 0. We first create the directories if they do not exist
         val localDir = File(appCfg.targetFilePath).createDirectoryIfNotExists(createParents = true)
 
         val result = for {
@@ -74,9 +73,11 @@ object Main {
     val lines = elems.map(_.mkString(",")).toString
     file.appendLines(lines)
   }
+
   def splitData(csvFile: File): (Seq[String], Seq[String])  = {
-    val data = csvFile.lines.toSeq
-    val trainingData = data.map(x => (Random.nextFloat(), x))
+    val lines = csvFile.lines.toList
+    val data = lines.drop(1).:::(List(lines.head.substring(lines.head.lastIndexOf("#") + 1, lines.head.length)))
+    val trainingData = data.toSeq.map(x => (Random.nextFloat(), x))
       .sortBy(_._1)
       .map(_._2)
       .take(3)
