@@ -20,8 +20,8 @@ object Main {
     AppConfig.load(ConfigUtil.loadFromEnv()) match {
       case Success(appCfg) =>
         // 0. We first delete old data and create the directories fresh
-        val fileDir = File(appCfg.targetFilePath)
-        val localDir = fileDir.createDirectoryIfNotExists(createParents = true)
+        File(appCfg.targetFilePath).deleteOnExit()
+        val localDir = File(appCfg.targetFilePath).createDirectoryIfNotExists(createParents = true)
 
         val result = for {
           // 1. Download the file and store it locally
