@@ -82,7 +82,7 @@ object Main {
 
     // Use seed such that we get the same data set always for training
     Random.setSeed(42)
-    Random.shuffle(0 until tail.length - 1)
+    Random.shuffle(0 to tail.length - 1)
     // Using the ration, we can get the percentage of data that we will use for training
     val trainingSetSize = (tail.length * testDataCfg.trainingSetRatio).toInt
 
