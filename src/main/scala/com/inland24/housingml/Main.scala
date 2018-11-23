@@ -35,12 +35,12 @@ object Main {
           (training, test) = splitData(File(s"${localDir.path}/housing.csv"))
 
           // 4. Write the split data set to File system
-          _ <- File(s"${localDir.path}/training.csv").appendLines(training.mkString(","))
-          _ <- File(s"${localDir.path}/test.csv").appendLines(test.mkString(","))
+          _ <- writeFile(File(s"${localDir.path}/training.csv"), training)
+          _ <- writeFile(File(s"${localDir.path}/test.csv"), test)
 
-          // 5. Clean the training data
+          // 5. Clean the training data and write it to the File
           cleansedData = cleanTrainingData(File(s"${localDir.path}/training.csv"))
-          _ <- File(s"${localDir.path}/cleansedTraining.csv").appendLines(cleansedData.mkString(","))
+          _ <- writeFile(File(s"${localDir.path}/cleansedTraining.csv"), cleansedData)
         } yield {
           println("Successfully ran the file pre-processing")
         }
@@ -71,6 +71,10 @@ object Main {
     Try { from.unGzipTo(to) }
   }
 
+  def writeFile(file: File, elems: Seq[String]): Try[Unit] = Try {
+    val lines = elems.map(_.mkString(",")).toString
+    file.appendLines(lines)
+  }
   def splitData(csvFile: File): (Seq[String], Seq[String])  = {
     val data = csvFile.lines.toSeq
     val trainingData = data.map(x => (Random.nextFloat(), x))
