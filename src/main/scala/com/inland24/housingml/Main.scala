@@ -22,7 +22,7 @@ object Main {
         // 0. We first delete old data and create the directories fresh
         val fileDir = File(appCfg.targetFilePath)
         fileDir.delete()
-        val localDir = fileDir.createDirectories()
+        val localDir = fileDir.createDirectoryIfNotExists(createParents = true)
 
         val result = for {
           // 1. Download the file and store it locally
