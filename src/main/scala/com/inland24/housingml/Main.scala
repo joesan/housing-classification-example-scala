@@ -8,7 +8,7 @@ import better.files._
 import scala.language.postfixOps
 import org.apache.commons.io.FileUtils
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Random, Success, Try}
 import scala.util.control.NonFatal
 
 
@@ -19,14 +19,28 @@ object Main {
     // Load the configuration & process
     AppConfig.load(ConfigUtil.loadFromEnv()) match {
       case Success(appCfg) =>
-        // 0. Check if we have the target dir's created, if not create them
-        val localDir = File(appCfg.targetFilePath).createDirectories()
+        // 0. We first delete old data and create the directories fresh
+        val fileDir = File(appCfg.targetFilePath)
+        fileDir.delete()
+        val localDir = fileDir.createDirectories()
 
         val result = for {
           // 1. Download the file and store it locally
           _ <- download(new URL(appCfg.sourceFileUrl), new JFile(localDir.toJava, appCfg.sourceFileName))
+
           // 2. Unzip the contents
           _ <- unzip(File(s"${localDir.path}/${appCfg.sourceFileName}"), File(s"${localDir.path}/housing.csv"))
+
+          // 3. Split the training data and test data
+          (training, test) = splitData(File(s"${localDir.path}/housing.csv"))
+
+          // 4. Write the split data set to File system
+          _ <- File(s"${localDir.path}/training.csv").appendLines(training.mkString(","))
+          _ <- File(s"${localDir.path}/test.csv").appendLines(test.mkString(","))
+
+          // 5. Clean the training data
+          cleansedData = cleanTrainingData(File(s"${localDir.path}/training.csv"))
+          _ <- File(s"${localDir.path}/cleansedTraining.csv").appendLines(cleansedData.mkString(","))
         } yield {
           println("Successfully ran the file pre-processing")
         }
@@ -57,8 +71,18 @@ object Main {
     Try { from.unGzipTo(to) }
   }
 
-  // TODO: Split the test set and put that in a folder of choice!
-  def splitTestSet(csvFile: File): Unit = {
-    val lines = csvFile.lines
+  def splitData(csvFile: File): (Seq[String], Seq[String])  = {
+    val data = csvFile.lines.toSeq
+    val trainingData = data.map(x => (Random.nextFloat(), x))
+      .sortBy(_._1)
+      .map(_._2)
+      .take(3)
+    (trainingData, data.filterNot(trainingData.toSet))
+  }
+
+  def cleanTrainingData(csvFile: File): Seq[String] = {
+    csvFile.lines.toSeq.collect {
+      case line if!line.split(",").toSeq.contains("") => line
+    }
   }
 }
