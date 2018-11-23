@@ -9,7 +9,12 @@ final case class AppConfig(
   environment: String,
   sourceFileName: String,
   sourceFileUrl: String,
-  targetFilePath: String
+  targetFilePath: String,
+  testDataConfig: TestDataConfig
+)
+
+case class TestDataConfig(
+  trainingSetRatio: Double = 0.2d
 )
 object AppConfig {
 
@@ -18,7 +23,10 @@ object AppConfig {
       environment = cfg.getString("environment"),
       sourceFileName = cfg.getString("file.name"),
       sourceFileUrl = cfg.getString("file.source.url"),
-      targetFilePath = cfg.getString("file.target.path")
+      targetFilePath = cfg.getString("file.target.path"),
+      testDataConfig = TestDataConfig(
+        trainingSetRatio = cfg.getDouble("training.ratio")
+      )
     )
   }
 }

@@ -30,7 +30,7 @@ object Main {
           _ <- unzip(File(s"${localDir.path}/${appCfg.sourceFileName}"), File(s"${localDir.path}/housing.csv"))
 
           // 3. Split the training data and test data
-          (training, test) = splitData(File(s"${localDir.path}/housing.csv"))
+          (training, test) = splitData(File(s"${localDir.path}/housing.csv"), appCfg.testDataConfig)
 
           // 4. Write the split data set to File system
           _ <- writeFile(File(s"${localDir.path}/training.csv"), training)
@@ -74,14 +74,20 @@ object Main {
     file.appendLines(lines)
   }
 
-  def splitData(csvFile: File): (Seq[String], Seq[String])  = {
+  def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
     val lines = csvFile.lines.toList
-    val data = lines.drop(1).:::(List(lines.head.substring(lines.head.lastIndexOf("#") + 1, lines.head.length)))
-    val trainingData = data.toSeq.map(x => (Random.nextFloat(), x))
-      .sortBy(_._1)
-      .map(_._2)
-      .take(3)
-    (trainingData, data.filterNot(trainingData.toSet))
+    // We need to clean the header of this file
+    val data = lines.drop(1).:::(List(lines.head.substring(lines.head.lastIndexOf("0 ") + 1, lines.head.length).trim))
+    val tail = data.tail
+
+    // Use seed such that we get the same data set always for training
+    Random.setSeed(42)
+    Random.shuffle(tail.indices)
+    // Using the ration, we can get the percentage of data that we will use for training
+    val trainingSetSize = (tail.length * testDataCfg.trainingSetRatio).toInt
+
+    val (trainingData, testData) = tail.splitAt(trainingSetSize)
+    (Seq(data.head) ++ trainingData, Seq(data.head) ++ testData)
   }
 
   def cleanTrainingData(csvFile: File): Seq[String] = {
