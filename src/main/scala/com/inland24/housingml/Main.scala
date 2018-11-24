@@ -88,6 +88,7 @@ object Main {
 
     val (trainingData, testData) = tail.splitAt(trainingSetSize)
     println(s">> Training Dataset Size is ${trainingData.length} >> Test Dataset size is ${testData.length}")
+    trainingData foreach println
     (Seq(data.head) ++ trainingData, Seq(data.head) ++ testData)
   }
 
