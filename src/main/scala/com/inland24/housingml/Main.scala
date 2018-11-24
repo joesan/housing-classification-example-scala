@@ -69,17 +69,14 @@ object Main {
     Try { from.unGzipTo(to) }
   }
 
-  // TODO: This method does not work properly! Check!!!!
   def writeFile(file: File, elems: Seq[String]): Try[Unit] = Try {
     elems.foreach(elem => file.appendLine(elem))
   }
 
   def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
     val lines = csvFile.lines.toList
-    println(lines.head.substring(lines.head.indexOf("longitude"), lines.head.length).trim)
-    println(lines.drop(1).head)
     // We need to clean the header of this file
-    val data = List(lines.head.substring(lines.head.indexOf("longitude"), lines.head.length).trim).:::(lines.drop(1))
+    val data = Seq(lines.head.substring(lines.head.indexOf("longitude"), lines.head.length).trim) ++ lines.drop(1)
     val tail = data.tail
 
     // Use seed such that we get the same data set always for training
@@ -90,7 +87,6 @@ object Main {
 
     val (trainingData, testData) = tail.splitAt(trainingSetSize)
     println(s">> Training Dataset Size is ${trainingData.length} >> Test Dataset size is ${testData.length}")
-    println(data.head)
     (Seq(data.head) ++ trainingData, Seq(data.head) ++ testData)
   }
 
