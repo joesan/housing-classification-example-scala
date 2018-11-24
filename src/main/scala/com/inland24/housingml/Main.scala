@@ -71,7 +71,7 @@ object Main {
 
   // TODO: This method does not work properly! Check!!!!
   def writeFile(file: File, elems: Seq[String]): Try[Unit] = Try {
-    elems.foreach(file.append)
+    elems.foreach(elem => file.append(elem))
   }
 
   def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
