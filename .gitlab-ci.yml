@@ -7,6 +7,10 @@ image: java:8
 variables:
   FILE_TARGET_PATH: $FILE_TARGET_PATH
 
+stages:
+  - test
+  - run
+
 before_script:
   # Enable the usage of sources over https
   - apt-get update -yqq
@@ -18,18 +22,18 @@ before_script:
   - apt-get update -yqq
   - apt-get install sbt -yqq
 
-test:
+Run unit Tests:
+  stage: test
   tags:
     - master
   script:
     # Execute your project's tests
     - sbt -Denv=test test
 
-run:
+Run Pipeline:
+  stage: run
   tags:
     - master
-  dependencies:
-    - test
   script:
     # Execute the pipeline
     - sbt -Denv=test run
