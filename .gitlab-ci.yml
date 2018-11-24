@@ -23,13 +23,13 @@ test:
     - master
   script:
     # Execute your project's tests
-    - sbt -Denv=test run
+    - sbt -Denv=test test
 
-#run:
- # tags:
-  #  - master
-  #dependencies:
-   # - test
-  #script:
+run:
+  tags:
+    - master
+  dependencies:
+    - test
+  script:
     # Execute the pipeline
-   # - sbt -Denv=test run
+    - sbt -Denv=test run
