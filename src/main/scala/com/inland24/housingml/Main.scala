@@ -76,6 +76,7 @@ object Main {
 
   def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
     val lines = csvFile.lines.toList
+    println(lines.head.substring(lines.head.indexOf("longitude"), lines.head.length).trim)
     // We need to clean the header of this file
     val data = List(lines.head.substring(lines.head.indexOf("longitude"), lines.head.length).trim).:::(lines.drop(1))
     val tail = data.tail
