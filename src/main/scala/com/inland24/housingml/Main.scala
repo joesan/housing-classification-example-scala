@@ -71,7 +71,7 @@ object Main {
 
   // TODO: This method does not work properly! Check!!!!
   def writeFile(file: File, elems: Seq[String]): Try[Unit] = Try {
-    elems.foreach(elem => file.write(elem))
+    elems.foreach(elem => file.appendLine(elem))
   }
 
   def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
@@ -88,7 +88,6 @@ object Main {
 
     val (trainingData, testData) = tail.splitAt(trainingSetSize)
     println(s">> Training Dataset Size is ${trainingData.length} >> Test Dataset size is ${testData.length}")
-    trainingData foreach println
     (Seq(data.head) ++ trainingData, Seq(data.head) ++ testData)
   }
 
