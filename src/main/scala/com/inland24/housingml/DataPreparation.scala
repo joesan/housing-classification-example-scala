@@ -15,8 +15,7 @@ import scala.util.Random
   */
 final class DataPreparation(testDataConfig: TestDataConfig) {
 
-  def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
-    val lines = csvFile.lines.toList
+  def splitData(lines: List[String], testDataCfg: TestDataConfig): (Seq[String], Seq[String]) = {
     // We need to clean the header of this file
     val data = Seq(lines.head.substring(lines.head.indexOf("longitude"), lines.head.length).trim) ++ lines.drop(1)
     val tail = data.tail
@@ -30,6 +29,10 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
     val (trainingData, testData) = tail.splitAt(trainingSetSize)
     println(s">> Training Dataset Size is ${trainingData.length} >> Test Dataset size is ${testData.length}")
     (Seq(data.head) ++ trainingData, Seq(data.head) ++ testData)
+  }
+
+  def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
+    splitData(csvFile.lines.toList, testDataCfg)
   }
 
   def cleanTrainingData(csvFile: File): Seq[String] = {
