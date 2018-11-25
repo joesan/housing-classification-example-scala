@@ -46,8 +46,6 @@ class DataPreparationTest extends FlatSpec {
     // Expect 40 records as training and the remaining 60 for test
     training.size === 40
     test.size === 60
-
-    // TODO: Since we use a seed to split the dataset, we should be consistent
   }
 
   "cleanseData" should "clean training dataset using clean strategy" in {
