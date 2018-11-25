@@ -8,7 +8,7 @@ import better.files._
 import scala.language.postfixOps
 import org.apache.commons.io.FileUtils
 
-import scala.util.{Failure, Random, Success, Try}
+import scala.util.{Failure, Success, Try}
 import scala.util.control.NonFatal
 
 
@@ -19,6 +19,7 @@ object Main {
     // Load the configuration & process
     AppConfig.load(ConfigUtil.loadFromEnv()) match {
       case Success(appCfg) =>
+        val dataPrep = DataPreparation(appCfg.testDataConfig)
         // 0. We first create the directories if they do not exist
         val localDir = File(appCfg.targetFilePath).createDirectoryIfNotExists(createParents = true)
 
@@ -30,14 +31,14 @@ object Main {
           _ <- unzip(File(s"${localDir.path}/${appCfg.sourceFileName}"), File(s"${localDir.path}/housing.csv"))
 
           // 3. Split the training data and test data
-          (training, test) = splitData(File(s"${localDir.path}/housing.csv"), appCfg.testDataConfig)
+          (training, test) = dataPrep.splitData(File(s"${localDir.path}/housing.csv"), appCfg.testDataConfig)
 
           // 4. Write the split data set to File system
           _ <- writeFile(File(s"${localDir.path}/training.csv"), training)
           _ <- writeFile(File(s"${localDir.path}/test.csv"), test)
 
           // 5. Clean the training data and write it to the File
-          cleansedData = cleanTrainingData(File(s"${localDir.path}/training.csv"))
+          cleansedData = dataPrep.cleanTrainingData(File(s"${localDir.path}/training.csv"))
           _ <- writeFile(File(s"${localDir.path}/cleansedTraining.csv"), cleansedData)
         } yield {
           println("Successfully ran the file pre-processing")
@@ -71,28 +72,5 @@ object Main {
 
   def writeFile(file: File, elems: Seq[String]): Try[Unit] = Try {
     elems.foreach(elem => file.appendLine(elem))
-  }
-
-  def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
-    val lines = csvFile.lines.toList
-    // We need to clean the header of this file
-    val data = Seq(lines.head.substring(lines.head.indexOf("longitude"), lines.head.length).trim) ++ lines.drop(1)
-    val tail = data.tail
-
-    // Use seed such that we get the same data set always for training
-    Random.setSeed(42)
-    Random.shuffle(0 to tail.length - 1)
-    // Using the ration, we can get the percentage of data that we will use for training
-    val trainingSetSize = (tail.length * testDataCfg.trainingSetRatio).toInt
-
-    val (trainingData, testData) = tail.splitAt(trainingSetSize)
-    println(s">> Training Dataset Size is ${trainingData.length} >> Test Dataset size is ${testData.length}")
-    (Seq(data.head) ++ trainingData, Seq(data.head) ++ testData)
-  }
-
-  def cleanTrainingData(csvFile: File): Seq[String] = {
-    csvFile.lines.toSeq.collect {
-      case line if!line.split(",").toSeq.contains("") => line
-    }
   }
 }
