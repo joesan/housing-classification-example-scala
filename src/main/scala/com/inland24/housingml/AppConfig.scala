@@ -13,8 +13,13 @@ final case class AppConfig(
   testDataConfig: TestDataConfig
 )
 
+sealed trait DataCleansingStrategy
+case object RemoveEmptyRows extends DataCleansingStrategy
+case object Median extends DataCleansingStrategy
+
 case class TestDataConfig(
-  trainingSetRatio: Double = 0.2d
+  trainingSetRatio: Double = 0.2d,
+  dataCleansingStrategy: DataCleansingStrategy = RemoveEmptyRows
 )
 object AppConfig {
 

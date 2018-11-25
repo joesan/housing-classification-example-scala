@@ -35,13 +35,19 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
     splitData(csvFile.lines.toList, testDataCfg)
   }
 
-  def cleanTrainingData(csvFile: File): Seq[String] = {
-    // 0. First load the data as a dense matrix using the Breeze library
-    val matrix = csvread(csvFile.toJava, ',')
+  // TODO: Implementation pending!!!!!
+  def cleanTrainingData(lines: Seq[String]): Seq[String] = testDataConfig.dataCleansingStrategy match {
+    case _ =>
+      lines.collect {
+        case line if!line.split(",").toSeq.contains("") => line
+      }
+  }
 
-    csvFile.lines.toSeq.collect {
-      case line if!line.split(",").toSeq.contains("") => line
-    }
+  def cleanTrainingData(csvFile: File): Seq[String] = {
+    // TODO: Using breeze library to work with data cleaning
+    // 0. First load the data as a dense matrix using the Breeze library
+    // val matrix = csvread(csvFile.toJava, ',')
+    cleanTrainingData(csvFile.lines.toSeq)
   }
 }
 
