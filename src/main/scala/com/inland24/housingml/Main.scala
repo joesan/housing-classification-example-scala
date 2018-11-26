@@ -19,9 +19,12 @@ object Main {
     // Load the configuration & process
     AppConfig.load(ConfigUtil.loadFromEnv()) match {
       case Success(appCfg) =>
-        val dataPrep = DataPreparation(appCfg.testDataConfig)
+        // Delete all the directories first!
+        File(appCfg.targetFilePath).clear()
+
         // 0. We first create the directories if they do not exist
         val localDir = File(appCfg.targetFilePath).createDirectoryIfNotExists(createParents = true)
+        val dataPrep = DataPreparation(appCfg.testDataConfig)
 
         val result = for {
           // 1. Download the file and store it locally
@@ -52,7 +55,8 @@ object Main {
 
         result.recover {
           case NonFatal(ex) =>
-            println(s"Some stupidity happened ${ex.getMessage} and the cause is ${ex.getCause}")
+            ex.printStackTrace()
+            //println(s"Some stupidity happened ${ex.getMessage} and the cause is ${ex.getCause}")
             System.exit(-1)
         }
       case Failure(ex) =>

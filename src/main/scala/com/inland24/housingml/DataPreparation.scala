@@ -32,6 +32,7 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
   }
 
   def splitData(csvFile: File, testDataCfg: TestDataConfig): (Seq[String], Seq[String])  = {
+    println(s"Before Split :: total size of CSV data is ${csvFile.lines.size}")
     splitData(csvFile.lines.toList, testDataCfg)
   }
 
@@ -47,15 +48,22 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
     // TODO: Using breeze library to work with data cleaning
     // 0. First load the data as a dense matrix using the Breeze library
     // val matrix = csvread(csvFile.toJava, ',')
-    cleanTrainingData(csvFile.lines.toSeq)
+    val ttt = cleanTrainingData(csvFile.lines.toSeq)
+    println(s"Total size of cleaned data is ${ttt.size}")
+    ttt
   }
 
   def encodeTrainingData(lines: Seq[String]): Seq[String] = {
     // We know that the Ocean Proximity is the last record in the given CSV and that needs to be encoded
-    val (data, oceanProximities) = lines.tail.map(elem => {
-      val strs = elem.split(",")
-      (strs.init.mkString(","), strs.last)
-    }).unzip
+    @tailrec
+    def splitRecursively(acc: Seq[(String, String)], elems: List[String]): Seq[(String, String)] = elems match {
+      case x :: xs =>
+        val (first, last) = (x.split(",").toSeq.init.mkString(","), x.split(",").toSeq.last)
+        splitRecursively(acc ++ Seq((first, last)), xs)
+      case Nil => acc
+    }
+
+    val (data, oceanProximities) = splitRecursively(Seq.empty, lines.tail.toList).unzip
     val oceanProximityHeaders = oceanProximities.distinct
     val newHeader = s"${lines.head.split(",").toSeq.init.mkString(",")},${oceanProximityHeaders.mkString(",")}"
 
@@ -78,7 +86,9 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
   }
 
   def encodeTrainingData(csvFile: File): Seq[String] = {
-    encodeTrainingData(csvFile.lines.toSeq)
+    val encoded = encodeTrainingData(csvFile.lines.toSeq)
+    println(s"Total size of encoded training data is ${encoded.size}")
+    encoded
   }
 }
 
