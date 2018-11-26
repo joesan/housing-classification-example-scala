@@ -40,6 +40,10 @@ object Main {
           // 5. Clean the training data and write it to the File
           cleansedData = dataPrep.cleanTrainingData(File(s"${localDir.path}/training.csv"))
           _ <- writeFile(File(s"${localDir.path}/cleansedTraining.csv"), cleansedData)
+
+          // 6. Encode the string features into binary
+          encodedData = dataPrep.encodeTrainingData(File(s"${localDir.path}/cleansedTraining.csv"))
+          _ <- writeFile(File(s"${localDir.path}/encodedTraining.csv"), encodedData)
         } yield {
           println("Successfully ran the file pre-processing")
         }
