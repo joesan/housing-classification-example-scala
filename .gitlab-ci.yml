@@ -11,6 +11,15 @@ stages:
   - test
   - run
 
+cache:
+  key: "$CI_BUILD_REF_NAME" # contains either the branch or the tag, so it's caching per branch
+  untracked: true
+  paths:
+    - "sbt-cache/.ivy.cache"
+    - "sbt-cache/.boot"
+    - "sbt-cache/.sbtboot"
+    - "sbt-cache/target"
+
 before_script:
   # Enable the usage of sources over https
   - apt-get update -yqq
@@ -28,7 +37,7 @@ Run unit Tests:
     - master
   script:
     # Execute your project's tests
-    - sbt -Denv=test test
+    - sbt -Denv=test clean test
 
 Run Pipeline:
   stage: run
