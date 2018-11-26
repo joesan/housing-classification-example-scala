@@ -1,8 +1,8 @@
 package com.inland24.housingml
 
 import better.files.File
-import breeze.linalg._
 
+import scala.annotation.tailrec
 import scala.util.Random
 
 /**
@@ -11,7 +11,7 @@ import scala.util.Random
   * 1. Split the dataset into test and training
   * 2. Cleanse the data
   *
-  * @param testDataConfig
+  * @param testDataConfig Configuration that we need to apply for the dataset
   */
 final class DataPreparation(testDataConfig: TestDataConfig) {
 
@@ -51,7 +51,30 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
   }
 
   def encodeTrainingData(lines: Seq[String]): Seq[String] = {
-    // TODO: We#ve got to implement a simplified OneHotEncoder damn it!
+    // We know that the Ocean Proximity is the last record in the given CSV and that needs to be encoded
+    val (data, oceanProximities) = lines.tail.map(elem => {
+      val strs = elem.split(",")
+      (strs.init.mkString(","), strs.last)
+    }).unzip
+    val oceanProximityHeaders = oceanProximities.distinct
+    val newHeader = s"${lines.head.split(",").toSeq.init.mkString(",")},${oceanProximityHeaders.mkString(",")}"
+
+    def toBinary(elem: String, compare: String) = {
+      if (elem == compare) 1 else 0
+    }
+
+    @tailrec
+    def recurse(acc: String, actual: String, elems: Seq[String]): String = elems match {
+      case x :: xs => recurse(s"$acc,${toBinary(actual, x)}", actual, xs)
+      case Nil => acc
+    }
+
+    val encoded = oceanProximities.map(ocean =>
+      recurse("", ocean, oceanProximityHeaders))
+
+    Seq(newHeader) ++ data.zip(encoded).map {
+      case (datas, oceans) => datas + oceans
+    }
   }
 
   def encodeTrainingData(csvFile: File): Seq[String] = {
