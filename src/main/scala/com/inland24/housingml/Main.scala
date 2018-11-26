@@ -52,7 +52,7 @@ object Main {
 
         result.recover {
           case NonFatal(ex) =>
-            println(s"Some stupidity happened ${ex.getMessage}")
+            println(s"Some stupidity happened ${ex.getMessage} and the cause is ${ex.getCause}")
             System.exit(-1)
         }
       case Failure(ex) =>
