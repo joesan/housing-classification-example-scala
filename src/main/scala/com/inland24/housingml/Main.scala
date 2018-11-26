@@ -19,11 +19,13 @@ object Main {
     // Load the configuration & process
     AppConfig.load(ConfigUtil.loadFromEnv()) match {
       case Success(appCfg) =>
-        // Delete all the directories first!
-        File(appCfg.targetFilePath).clear()
+        // Delete all the directories first - Of course only if it exists
+        val fileDir = File(appCfg.targetFilePath)
+        if (fileDir.exists())
+          fileDir.delete()
 
         // 0. We first create the directories if they do not exist
-        val localDir = File(appCfg.targetFilePath).createDirectoryIfNotExists(createParents = true)
+        val localDir = fileDir.createDirectoryIfNotExists(createParents = true)
         val dataPrep = DataPreparation(appCfg.testDataConfig)
 
         val result = for {
