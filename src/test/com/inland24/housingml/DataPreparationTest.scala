@@ -61,7 +61,7 @@ class DataPreparationTest extends FlatSpec {
             s",${random(600, 2000)},${random(200, 1000)},,,NEAR BAY"
         } else {
           s"${random(-180.0, 180.0)},${random(-90.0, 90.0)},${random(1000, 10000)},,${random(800, 2000)}," +
-            s",,${random(200, 1000)},,,NEAR BAY"
+            s",,${random(200, 1000)},,,NEAR OCEAN"
         }
         newElem
     }

@@ -49,6 +49,14 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
     // val matrix = csvread(csvFile.toJava, ',')
     cleanTrainingData(csvFile.lines.toSeq)
   }
+
+  def encodeTrainingData(lines: Seq[String]): Seq[String] = {
+    // TODO: We#ve got to implement a simplified OneHotEncoder damn it!
+  }
+
+  def encodeTrainingData(csvFile: File): Seq[String] = {
+    encodeTrainingData(csvFile.lines.toSeq)
+  }
 }
 
 object DataPreparation {
