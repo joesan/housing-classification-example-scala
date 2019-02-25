@@ -63,6 +63,10 @@ libraryDependencies ++= Seq(
   "com.github.pathikrit" %% "better-files" % "3.6.0",
   "org.apache.commons" % "commons-compress" % "1.14",
   "commons-io" % "commons-io" % "2.6",
+
+  // These libraries below are for experimental purposes
+  "org.typelevel" %% "spire" % "0.16.0",
+
   // Test dependencies
   "org.scalatest" %% "scalatest" % "3.0.1" % Test,
   "org.awaitility" % "awaitility" % "3.0.0" % Test
