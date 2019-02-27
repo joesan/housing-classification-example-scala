@@ -84,7 +84,7 @@ class DataPreparationTest extends FlatSpec {
       }
 
     // Now let's encode for the Ocean Proximity fields
-    val encoded = dataPreparation.encodeTrainingData(training)
+    val encoded = dataPreparation.encodeDataSet(training)
 
     // We have 4 Ocean Proximity values, let us extract the encoded result (obviously the last 4 elements)
     val oceanProximitiesWithHeaders =

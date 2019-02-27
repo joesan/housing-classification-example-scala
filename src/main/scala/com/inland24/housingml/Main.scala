@@ -47,13 +47,19 @@ object Main {
           _ <- writeFile(File(s"${localDir.path}/cleansedTraining.csv"), cleansedData)
 
           // 6. Encode the string features into binary
-          encodedData = dataPrep.encodeTrainingData(File(s"${localDir.path}/cleansedTraining.csv"))
-          _ <- writeFile(File(s"${localDir.path}/encodedTraining.csv"), encodedData)
+          encodedTestData = dataPrep.encodeDataSet(File(s"${localDir.path}/cleansedTraining.csv"))
+          _ <- writeFile(File(s"${localDir.path}/encodedTraining.csv"), encodedTestData)
+
+          // 6.1 We also need to Encode the string features into binary for the test (validation) data set
+          // TODO: Write unit tests for this...
+          encodedValidationData = dataPrep.encodeDataSet(File(s"${localDir.path}/test.csv"))
+          _ <- writeFile(File(s"${localDir.path}/encodedTraining.csv"), encodedValidationData)
         } yield {
           println("Successfully ran the file pre-processing")
+          println(s"Printing all the files that were produced ****** ")
+          localDir.list.foreach(println)
+          println(s"************************************************ ")
         }
-
-        localDir.list.foreach(println)
 
         result.recover {
           case NonFatal(ex) =>
@@ -64,7 +70,8 @@ object Main {
       case Failure(ex) =>
         println(s"No environment variable setting found! So exiting run...." +
           s"failed with the error message ${ex.getMessage}")
-        println("Usage: sbt -Denv=test run")
+        println("To run against a test environment configuration, use the following command:")
+        println("sbt -Denv=test run")
         System.exit(-1)
     }
   }

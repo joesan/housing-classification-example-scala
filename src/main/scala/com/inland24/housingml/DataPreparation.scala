@@ -53,7 +53,7 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
     ttt
   }
 
-  def encodeTrainingData(lines: Seq[String]): Seq[String] = {
+  def encodeDataSet(lines: Seq[String]): Seq[String] = {
     // We know that the Ocean Proximity is the last record in the given CSV and that needs to be encoded
     @tailrec
     def splitRecursively(acc: Seq[(String, String)], elems: List[String]): Seq[(String, String)] = elems match {
@@ -85,8 +85,8 @@ final class DataPreparation(testDataConfig: TestDataConfig) {
     }
   }
 
-  def encodeTrainingData(csvFile: File): Seq[String] = {
-    val encoded = encodeTrainingData(csvFile.lines.toSeq)
+  def encodeDataSet(csvFile: File): Seq[String] = {
+    val encoded = encodeDataSet(csvFile.lines.toSeq)
     println(s"Total size of encoded training data is ${encoded.size}")
     encoded
   }
