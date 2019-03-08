@@ -11,7 +11,7 @@ object SimpleLinearRegression {
     xs.sum.toDouble / xs.size
 
   // TODO: Check if the formula is correct! Write unit tests!
-  def covariance[A: Numeric](xs: Seq[A], ys: Seq[A]): Double = {ä
+  def covariance[A: Numeric](xs: Seq[A], ys: Seq[A]): Double = {
     (meanDiff(xs) zip meanDiff(ys)).map {
       case (x, y) => x.toDouble() * y.toDouble()
     }.sum / xs.length - 1
